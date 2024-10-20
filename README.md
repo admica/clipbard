@@ -1,4 +1,5 @@
 <img src="./logo.png" alt="Clipbard Logo" width="100" height="100" align="right" />
+
 # 📋 Clipbard.nvim
 
 Clipbard is a minimal Neovim plugin that enhances your clipboard experience by automatically synchronizing (n)vim's internal registers with your system clipboard.
