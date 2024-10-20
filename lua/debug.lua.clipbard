@@ -1,0 +1,52 @@
+-- File: ~/.local/share/nvim/lazy/clipbard/lua/clipbard.lua
+
+local M = {}
+
+local is_wsl = vim.fn.has('wsl') == 1
+
+local function log(message)
+  vim.fn.writefile({message}, '/tmp/clipbard.log', 'a')
+end
+
+local function sync_clipboard(data)
+  log("Syncing clipboard: " .. vim.inspect(data))
+  if is_wsl then
+    vim.fn.system('clip.exe', data)
+  else
+    vim.fn.setreg('+', data)
+  end
+end
+
+local function enhanced_operator(op)
+  return function()
+    log("Operator called: " .. op)
+    local old_reg = vim.fn.getreg('"')
+    vim.cmd('silent normal! ' .. op)
+    local new_reg = vim.fn.getreg('"')
+    if old_reg ~= new_reg then
+      sync_clipboard(new_reg)
+    end
+  end
+end
+
+function M.setup()
+  log("Setting up Clipbard")
+  
+  vim.api.nvim_create_autocmd({"TextYankPost", "TextChanged", "TextChangedI"}, {
+    group = vim.api.nvim_create_augroup("Clipbard", { clear = true }),
+    callback = function()
+      log("Autocmd triggered")
+      sync_clipboard(vim.fn.getreg('"'))
+    end,
+  })
+
+  -- Map operators
+  local ops = { 'y', 'Y', 'd', 'D', 'c', 'C', 'x', 'X', 's', 'S' }
+  for _, op in ipairs(ops) do
+    vim.keymap.set({'n', 'v'}, op, enhanced_operator(op), {noremap = true, silent = true})
+  end
+
+  log("Clipbard setup complete")
+end
+
+return M
