@@ -37,7 +37,7 @@ Clipbard works out of the box with no additional configuration. However, if you 
 
 ```lua
 require('clipbard').setup({
-  -- Options here (coming soon!)
+  -- Options here, coming soon™
 })
 ```
 
