@@ -15,7 +15,7 @@ Clipbard is a minimal Neovim plugin that enhances your clipboard experience by a
 
 ```lua
 {
-  "yourusername/clipbard.nvim",
+  "admica/clipbard.nvim",
   config = function()
     require("clipbard").setup()
   end,
@@ -26,7 +26,7 @@ Clipbard is a minimal Neovim plugin that enhances your clipboard experience by a
 
 ```lua
 use {
-  'yourusername/clipbard.nvim',
+  'admica/clipbard.nvim',
   config = function() require('clipbard').setup() end
 }
 ```
@@ -45,7 +45,7 @@ require('clipbard').setup({
 
 Once installed and set up, Clipbard will automatically enhance your clipboard experience. Use Vim as you normally would, and enjoy the seamless integration with your system clipboard!
 
-- `y` (yank)
+- `y` (yank) and yy
 - `d` (delete)
 - `c` (change)
 - `x` (delete character)
