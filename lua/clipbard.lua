@@ -1,8 +1,7 @@
 -- ~/.config/nvim/lua/plugins/clipbard.lua
-
 local M = {}
 
-local function enhance_clipboard(key)
+local function sync_with_system_clipboard(key)
   return function()
     -- Store the current unnamed register
     local old_unnamed = vim.fn.getreg('"')
@@ -22,9 +21,9 @@ end
 
 function M.setup()
   -- Map keys in normal and visual mode
-  local keys = { 'y', 'Y', 'c', 'C', 'd', 'D', 'x' }
+  local keys = { 'y', 'Y', 'd', 'D', 'c', 'C', 'x', 'X' }
   for _, key in ipairs(keys) do
-    vim.keymap.set({'n', 'v'}, key, enhance_clipboard(key), {noremap = true, silent = true})
+    vim.keymap.set({'n', 'v'}, key, sync_with_system_clipboard(key), {noremap = true, silent = true})
   end
 end
 
