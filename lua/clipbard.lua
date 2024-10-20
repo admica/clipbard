@@ -1,11 +1,10 @@
 -- ~/.config/nvim/lua/plugins/clipbard.lua
+-- File: ~/.local/share/nvim/lazy/clipbard/lua/clipbard.lua
 
 local M = {}
 
--- Cache the WSL status
 local is_wsl = vim.fn.has('wsl') == 1
 
--- Debounce function to limit clipboard operations
 local debounce_timer = nil
 local function debounced_sync(data)
   if debounce_timer then
@@ -20,7 +19,6 @@ local function debounced_sync(data)
   end, 10) -- 10ms debounce
 end
 
--- Efficient operator function
 local function enhanced_operator(op)
   return function()
     local old_reg = vim.fn.getreg('"')
@@ -32,8 +30,14 @@ local function enhanced_operator(op)
   end
 end
 
+local function enhanced_yy()
+  return function()
+    vim.cmd('silent normal! yy')
+    debounced_sync(vim.fn.getreg('"'))
+  end
+end
+
 function M.setup()
-  -- Use a single autocommand for all relevant events
   vim.api.nvim_create_autocmd({"TextYankPost", "TextChanged", "TextChangedI"}, {
     group = vim.api.nvim_create_augroup("Clipbard", { clear = true }),
     callback = function()
@@ -41,11 +45,14 @@ function M.setup()
     end,
   })
 
-  -- Map operators
+  -- Map single-character operators
   local ops = { 'y', 'Y', 'd', 'D', 'c', 'C', 'x', 'X', 's', 'S' }
   for _, op in ipairs(ops) do
     vim.keymap.set({'n', 'v'}, op, enhanced_operator(op), {noremap = true, silent = true})
   end
+
+  -- Special case for 'yy'
+  vim.keymap.set('n', 'yy', enhanced_yy(), {noremap = true, silent = true})
 end
 
 return M
