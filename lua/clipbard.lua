@@ -1,5 +1,4 @@
 -- ~/.config/nvim/lua/plugins/clipbard.lua
--- File: ~/.local/share/nvim/lazy/clipbard/lua/clipbard.lua
 
 local M = {}
 
