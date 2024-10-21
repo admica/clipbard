@@ -2,7 +2,7 @@
 
 # 📋 Clipbard.nvim
 
-Clipbard is a minimal Neovim plugin that enhances your clipboard experience by automatically synchronizing (n)vim's internal registers with your system clipboard.
+Clipbard is a minimal Neovim plugin that enhances your clipboard experience by automatically synchronizing (n)vim's internal registers with your system clipboard. TJ pointed me to :help after I did this, oh well. :)
 
 ## ✨ Features
 
